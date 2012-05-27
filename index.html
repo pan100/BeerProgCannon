@@ -74,26 +74,10 @@
 			var cannonOffset;			
 			
 			
-			$(document).ready(function() {
+			$(window).load(function() {
 				init();
-			});
-			//TODO for some reason the CENTERPINTX and CENTERPOINTY is set wrong
-			$(window).resize(function() {
-  				init();
-			});
-			
-			function init() {
-
-				//center point in image 65x150y
-				cannonOffset = $("#cannon").offset();
-				CENTERPOINTX = cannonOffset.left;
-				CENTERPOINTY = cannonOffset.top -90;
-
-				//show some feedback about the centerpoint
-				$("#facts").html("Centerpoint: X=" + CENTERPOINTX + " , Y=" + CENTERPOINTY);
-
-
-				//the handler when the mouse moves
+				
+								//the handler when the mouse moves
 				$(document).mousemove(function(e) {
 					//show the x y position
 					$('#status').html(e.pageX + ', ' + e.pageY);
@@ -118,6 +102,23 @@
 						fireCannon();
 					}
 				});
+			});
+			$(window).resize(function() {
+  				init();
+			});
+			
+			function init() {
+
+				//center point in image 65x150y
+				cannonOffset = $("#cannon").offset();
+				CENTERPOINTX = cannonOffset.left +65;
+				CENTERPOINTY = cannonOffset.top +90;
+
+				//show some feedback about the centerpoint
+				$("#facts").html("Centerpoint: X=" + CENTERPOINTX + " , Y=" + CENTERPOINTY);
+
+
+
 			}
 			
 			function fireCannon() {
