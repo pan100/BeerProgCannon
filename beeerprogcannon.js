@@ -11,7 +11,8 @@
  * 
  * TODO: 
  * 
- * - Shoot down logos or perhaps heroes in the "looking for group" application or members of the facebook group or whatever comes into mind
+ * - Shoot down logos or perhaps heroes in the "looking for group"
+ *   application  or members of the facebook group or whatever comes into mind
  * - collision detection and points for shooting down whatever is up there
  * - fine adjust the cannon - let the beers come out of the top of the cannon instead
  * - Window resizing and responsiveness
@@ -23,7 +24,8 @@
 //whether or not the cannon is ready to fire
 var cannonReady = true;
 // not constants at this point, htey are actially set under $(document).ready.
-//but we need to rotate the cannon around a center - or more specifically the point of the crossing between the cannon and the wheels...
+//but we need to rotate the cannon around a center - or more
+//specifically the  point of the crossing between the cannon and the wheels...
 var CENTERPOINTX = 0;
 var CENTERPOINTY = 0;
 //just a varuiable used during diversion of degrees and radians
@@ -34,7 +36,8 @@ var ballsFired = 0;
 var cannonBalls = [];
 //a timer is set - see the method cannonBallStep and the "class" cannonBall to understand
 var cannonBallStepper = setInterval("cannonBallStep()", 5);
-//we need to track the angle of the invisible line from the mouse x y to the cannon centerpoint x y
+//we need to track the angle of the invisible line from the mouse x y
+//to the cannon centerpoint x y
 var angle = 0;
 var cannonOffset;			
 
@@ -113,7 +116,10 @@ function isOutOfViewPort(cannonBall) {
   var viewportHeight = $(window).height();
   var viewportWidth = $(window).width();
   
-  if(cannonBall.x < 0 || cannonBall.y < 0 || cannonBall.x > viewportWidth || cannonBall.y > viewportHeight) {
+  if(cannonBall.x < 0 
+     || cannonBall.y < 0
+     || cannonBall.x > viewportWidth 
+     || cannonBall.y > viewportHeight) {
     return true;
   }
   else return false;
@@ -122,9 +128,15 @@ function isOutOfViewPort(cannonBall) {
 function CannonBall(angle, numberInRow) {
   this.angle = angle - 90;
   this.number = numberInRow;
-  //TODO position according to the center of the cannon - the center of the beer should be at the center of the cannon
-  $("body").append("<div id='ball" + this.number + "' class='cannonBall' style='position:absolute; top:"
-		   + (CENTERPOINTX - 50) + "px;left:" + (CENTERPOINTY -22) + "px;'><img src='beer.png' id='beerImage"+ this.number + "'></div>");
+  //TODO position according to the center of the cannon - the center
+  //of the beer should be at the center of the cannon
+  $("body").append("<div id='ball" + this.number 
+                   + "' class='cannonBall' style='position:absolute; top:"
+		   + (CENTERPOINTX - 50) 
+                   + "px;left:" + (CENTERPOINTY -22) 
+                   + "px;'><img src='beer.png' id='beerImage" 
+                   + this.number 
+                   + "'></div>");
   $("#beerImage" + this.number).rotate	(angle);
   this.element = $("#ball" + this.number);
   this.x = CENTERPOINTX -22;
