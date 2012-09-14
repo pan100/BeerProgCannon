@@ -26,3 +26,5 @@ Change log:
 2 Beers were given away for this to happend!
 
 0.0.1 - experimental 1st commit with the cannon shooting beers.
+
+Contributors: eoma and ljos. Both were given beers.
