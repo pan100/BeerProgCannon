@@ -1,0 +1,19 @@
+body {
+    overflow: hidden;
+}
+
+#cannonWrapper {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
+
+#cannon {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cannonBall {
+    font-size: 20px;
+}
