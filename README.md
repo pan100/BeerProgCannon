@@ -24,4 +24,5 @@ Change log:
 
 0.1 Fixed bug with positioning. Cleaner code and separation between code, css and html.
 2 Beers were given away for this to happend!
+
 0.0.1 - experimental 1st commit with the cannon shooting beers.
