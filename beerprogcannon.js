@@ -128,8 +128,6 @@ function isOutOfViewPort(cannonBall) {
 function CannonBall(angle, numberInRow) {
   this.angle = angle - 90;
   this.number = numberInRow;
-  //TODO position according to the center of the cannon - the center
-  //of the beer should be at the center of the cannon
   $("body").append("<div id='ball" + this.number 
                    + "' class='cannonBall' style='position:absolute; top:"
 		   + (CENTERPOINTX - 50) 
