@@ -51,8 +51,8 @@ $(window).load(function() {
     $('#status').html(e.pageX + ', ' + e.pageY);
     //calculate the angle
     var relativeX = e.pageX - CENTERPOINTX;
-    var relativeY = -(e.pageY - CENTERPOINTY);
-    angle = Math.atan(-(relativeY) / relativeX) / degreeInRadians -90;
+    var relativeY = e.pageY - CENTERPOINTY;
+    angle = Math.atan(relativeY / relativeX) / degreeInRadians - 90;
     if(relativeX > 0) {
       angle = angle + 180;
     }
@@ -135,7 +135,7 @@ function CannonBall(angle, numberInRow) {
                    + "px;'><img src='beer.png' id='beerImage" 
                    + this.number 
                    + "'></div>");
-  $("#beerImage" + this.number).rotate	(angle);
+  $("#beerImage" + this.number).rotate(angle);
   this.element = $("#ball" + this.number);
   this.x = CENTERPOINTX -22;
   this.y = CENTERPOINTY - 50;
