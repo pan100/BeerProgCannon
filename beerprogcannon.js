@@ -137,8 +137,10 @@ function CannonBall(angle, numberInRow) {
                    + "'></div>");
   $("#beerImage" + this.number).rotate(angle);
   this.element = $("#ball" + this.number);
-  this.x = CENTERPOINTX -22;
-  this.y = CENTERPOINTY - 50;
+
+  this.x = CENTERPOINTX - 22 + 160*Math.cos(degreeInRadians * this.angle);
+  this.y = CENTERPOINTY - 50 + 160*Math.sin(degreeInRadians * this.angle);
+
   this.moveForward = function() {
     this.x = this.x + Math.cos(degreeInRadians * this.angle);
     this.y = this.y + Math.sin(degreeInRadians * this.angle);
