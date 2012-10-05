@@ -95,7 +95,7 @@ function fireCannon() {
   cannonBalls.push(cannonBall);
   cannonReady = false;
   $('#load').html("loading");
-  var timeout = setTimeout("loadCannon()", 1000);
+  var timeout = setTimeout(loadCannon, 1000);
 }
 
 function loadCannon() {
