@@ -20,6 +20,20 @@
  * 
  */
 
+//Function extending the array so we can remove objects
+
+Array.prototype.removeObject = function (element) 
+  {
+          for (var i = 0; i < this.length; i++) 
+       {
+              if (this[i] == element) 
+          {
+                      this.splice(i,1);
+              }
+          }
+          return false;
+  };
+
 //VARIABLES
 //whether or not the cannon is ready to fire
 var cannonReady = true;
@@ -108,6 +122,7 @@ function cannonBallStep() {
     item.moveForward();
     if(isOutOfViewPort(item)) {
       item.destroy();
+      cannonBalls.removeObject(item);
     }
   });
 }
