@@ -13,7 +13,7 @@ Images of attendends of "pils og programmering" fly around in the sky. You need 
 o'rly so busy programming. They are thirsty help them out!
 
 TODO:
-Facebook integration
+Facebook integration. And now it is easier on smaller screens, so it should scale for different resolutions.
 
 A done feature pushed by a member of pils and programming will get a free ber from me (pan100)....
 
