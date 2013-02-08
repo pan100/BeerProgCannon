@@ -74,7 +74,14 @@ var ballsFired = 0;
 //an array of existing cannon balls
 var cannonBalls = [];
 //a timer is set - see the method cannonBallStep and the "class" cannonBall to understand
-var cannonBallStepper = setInterval("cannonBallStep()", 5);
+
+// Time between cannonBallSted in milliseconds
+var intervalDelay = 5;
+
+// Time between cannonBallStep in seconds
+var deltaTime = intervalDelay / 1000.0;
+
+var cannonBallStepper = setInterval("cannonBallStep()", intervalDelay);
 //we need to track the angle of the invisible line from the mouse x y
 //to the cannon centerpoint x y
 var angle = 0;
@@ -85,6 +92,11 @@ var TIMEBETWEENPERSONS = 600;
 var timeBeforeNextPerson = TIMEBETWEENPERSONS;
 var peopleAdded = 0;
 
+// pixels pr second
+var maxSpeed = 300;
+
+// How much speed changes per second
+var gravity = 150;
 
 var score = 0;
 
@@ -99,6 +111,7 @@ $(window).load(function() {
     var relativeX = e.pageX - CENTERPOINTX;
     var relativeY = e.pageY - CENTERPOINTY;
     angle = Math.atan(relativeY / relativeX) / degreeInRadians - 90;
+
     if(relativeX > 0) {
       angle = angle + 180;
     }
@@ -194,6 +207,8 @@ function isOutOfViewPort(item) {
 function CannonBall(angle, numberInRow) {
   this.angle = angle - 90;
   this.number = numberInRow;
+  this.speed = maxSpeed; // pixels pr second
+
   $("body").append("<div id='ball" + this.number 
                    + "' class='cannonBall' style='position:absolute; top:"
 		   + (CENTERPOINTX - 50) 
@@ -207,10 +222,18 @@ function CannonBall(angle, numberInRow) {
   this.x = CENTERPOINTX - 22 + 160*Math.cos(degreeInRadians * this.angle);
   this.y = CENTERPOINTY - 50 + 160*Math.sin(degreeInRadians * this.angle);
 
+  // Remember that if acceleration is involved, speed (or more correctly velocity) changes, wrt. to time
+  this.velocity_x = this.speed * Math.cos(degreeInRadians * (this.angle));
+  this.velocity_y = this.speed * Math.sin(degreeInRadians * (this.angle));
+
   this.moveForward = function() {
-    this.x = this.x + Math.cos(degreeInRadians * this.angle);
-    this.y = this.y + Math.sin(degreeInRadians * this.angle);
-    this.element.css({top:this.y, left:this.x});	
+    this.x += this.velocity_x * deltaTime;
+
+    // Since gravity is involved our vertical velocity changes with time
+    this.velocity_y -= -1 * gravity * deltaTime;
+    this.y += this.velocity_y * deltaTime;
+
+    this.element.css({top:this.y, left:this.x});
   }
   
   this.destroy = function() {
