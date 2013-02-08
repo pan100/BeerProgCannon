@@ -204,6 +204,22 @@ function isOutOfViewPort(item) {
   else return false;
 }
 
+function findAngle(x, y) {
+    var myAngle = Math.atan(y / x) / degreeInRadians;
+
+    if(x > 0) {
+      myAngle += 180;
+    }
+
+    if(myAngle < 0) {
+      myAngle += 360;
+    }
+
+    myAngle -= 90;
+
+    return myAngle;
+}
+
 function CannonBall(angle, numberInRow) {
   this.angle = angle - 90;
   this.number = numberInRow;
@@ -212,19 +228,21 @@ function CannonBall(angle, numberInRow) {
   $("body").append("<div id='ball" + this.number 
                    + "' class='cannonBall' style='position:absolute; top:"
 		   + (CENTERPOINTX - 50) 
-                   + "px;left:" + (CENTERPOINTY -22) 
+                   + "px;left:" + (CENTERPOINTY - 22) 
                    + "px;'><img src='beer.png' id='beerImage" 
                    + this.number 
                    + "'></div>");
-  $("#beerImage" + this.number).rotate(angle);
   this.element = $("#ball" + this.number);
+
+  // Rotate according to the cannon's angle
+  this.element.rotate(angle);
 
   this.x = CENTERPOINTX - 22 + 160*Math.cos(degreeInRadians * this.angle);
   this.y = CENTERPOINTY - 50 + 160*Math.sin(degreeInRadians * this.angle);
 
   // Remember that if acceleration is involved, speed (or more correctly velocity) changes, wrt. to time
-  this.velocity_x = this.speed * Math.cos(degreeInRadians * (this.angle));
-  this.velocity_y = this.speed * Math.sin(degreeInRadians * (this.angle));
+  this.velocity_x = this.speed * Math.cos(degreeInRadians * this.angle);
+  this.velocity_y = this.speed * Math.sin(degreeInRadians * this.angle);
 
   this.moveForward = function() {
     this.x += this.velocity_x * deltaTime;
@@ -233,6 +251,7 @@ function CannonBall(angle, numberInRow) {
     this.velocity_y -= -1 * gravity * deltaTime;
     this.y += this.velocity_y * deltaTime;
 
+    this.element.rotate(findAngle(this.velocity_x, this.velocity_y));
     this.element.css({top:this.y, left:this.x});
   }
   
