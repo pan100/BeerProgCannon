@@ -1,4 +1,4 @@
-BeerProgCannon 0.1
+BeerProgCannon 0.1.1
 ==============
 
 BeerProgCannon - a game for Pils og Programmering
@@ -18,7 +18,9 @@ Facebook integration. And now it is easier on smaller screens, so it should scal
 A done feature pushed by a member of pils and programming will get a free ber from me (pan100)....
 
 Change log:
+
 0.1.1 Eoma implemented a gravity system making the beers turn and fall back down.
+
 0.1 Added collision detection
 
 0.0.2 Fixed bug with positioning. Cleaner code and separation between code, css and html.
