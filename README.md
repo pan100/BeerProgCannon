@@ -7,15 +7,13 @@ BeerProgCannon - a game for Pils og Programmering
 The game consists of a cannon at the bottom of the browser window, that rotates with mouse movement and shoots beers
 when the mouse button is clicked (the cannon "loads" for a short time - it is not a machine gun).
 
-Plans for the game:
-
 Images of attendends of "pils og programmering" fly around in the sky. You need to provide them with beer as they are
 o'rly so busy programming. They are thirsty help them out!
 
 TODO:
 Facebook integration. And now it is easier on smaller screens, so it should scale for different resolutions.
 
-A done feature pushed by a member of pils and programming will get a free ber from me (pan100)....
+A done feature pushed by a member of pils and programming will get a free beer from me (pan100)....
 
 Change log:
 
