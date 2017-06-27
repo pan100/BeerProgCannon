@@ -6,7 +6,7 @@ import Game from './Game.js'
 class App extends Component {
   render() {
     return (
-      <Game/>
+      <Game width="800" height="500"/>
     );
   }
 }

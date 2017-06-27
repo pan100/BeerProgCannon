@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import CannonBall from './CannonBall.js'
 
+    const cannonX = 400-15;
+    const cannonY = 500-60;
+
 class Game extends Component {
 
     constructor() {
@@ -13,8 +16,11 @@ class Game extends Component {
         this.cannonBalls = [];
         this.cannonReady = true;
         this.cannonBallStepper = setInterval(()=>{
-            this.cannonBalls.forEach((ball)=> {
+            this.cannonBalls.forEach((ball, index, array)=> {
                 ball.moveForward();
+                if(this.isOutOfViewPort(ball)) {
+                    array.splice(index,1);
+                }
             });
         },5);
     }
@@ -29,8 +35,6 @@ class Game extends Component {
         this.updateCanvas();
     }
     onMouseMove(e) {
-            //show the x y position
-    // $('#status').html(e.pageX + ', ' + e.pageY);
     //calculate the angle
     var relativeX = e.pageX-400;
     var relativeY = e.pageY-600;
@@ -55,26 +59,23 @@ onMouseClick(e) {
     }
 }
     updateCanvas() {
-    const cannonX = 400-15;
-    const cannonY = 500-60;
+
     
     const ctx = this.refs.canvas.getContext('2d');
-    ctx.clearRect(0,0, 800, 500);
+    ctx.clearRect(0,0, this.props.width, this.props.height);
         //draw the cannon balls
     this.cannonBalls.forEach((ball) => {
-    ctx.save();
-    // move to the center of the canvas
-    ctx.translate(ball.x+cannonX,ball.y+cannonY);
+        ctx.save();
+        ctx.translate(ball.x+cannonX,ball.y+cannonY);
+        // rotate the canvas to the specified degrees
+        ctx.rotate((ball.angle+90)*Math.PI/180);
 
-    // rotate the canvas to the specified degrees
-    ctx.rotate((ball.angle+90)*Math.PI/180);
+        // draw the image
+        // since the context is rotated, the image will be rotated also
+        ctx.drawImage(this.beerImageObj,0,0,30,60);
 
-    // draw the image
-    // since the context is rotated, the image will be rotated also
-    ctx.drawImage(this.beerImageObj,0,0,30,60);
-
-    // we’re done with the rotating so restore the unrotated context
-    ctx.restore();
+        // we’re done with the rotating so restore the unrotated context
+        ctx.restore();
     });
 
             // save the unrotated context of the canvas so we can restore it later
@@ -94,9 +95,19 @@ onMouseClick(e) {
     }
     render() {
          return (
-             <canvas onMouseMove={e => this.onMouseMove (e)} onMouseDown={e => this.onMouseClick (e)} ref="canvas" width={800} height={500}/>
+             <canvas onMouseMove={e => this.onMouseMove (e)} onMouseDown={e => this.onMouseClick (e)} ref="canvas" width={this.props.width} height={this.props.height}/>
          );
     }
+    isOutOfViewPort(item) {
+          if(item.x+cannonX < 0 
+     || item.y+cannonY < 0
+     || item.x+cannonX > this.props.width 
+     || item.y+cannonY > this.props.height) {
+         console.log("removing at " + item.x + " " + item.y);
+    return true;
+  }
+  else return false;
 }
+    }
 
 export default Game;
