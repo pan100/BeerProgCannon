@@ -55,8 +55,8 @@ onMouseClick(e) {
     }
 }
     updateCanvas() {
-    const cannonX = 400-this.imageObj.clientHeight;
-    const cannonY = 300-this.imageObj.clientWidth/2;
+    const cannonX = 400-15;
+    const cannonY = 500-60;
     
     const ctx = this.refs.canvas.getContext('2d');
     ctx.clearRect(0,0, 800, 500);
@@ -71,7 +71,7 @@ onMouseClick(e) {
 
     // draw the image
     // since the context is rotated, the image will be rotated also
-    ctx.drawImage(this.beerImageObj,0,0);
+    ctx.drawImage(this.beerImageObj,0,0,30,60);
 
     // we’re done with the rotating so restore the unrotated context
     ctx.restore();
@@ -80,7 +80,6 @@ onMouseClick(e) {
             // save the unrotated context of the canvas so we can restore it later
     // the alternative is to untranslate & unrotate after drawing
     ctx.save();
-    // move to the center of the canvas
     ctx.translate(cannonX,cannonY);
 
     // rotate the canvas to the specified degrees
@@ -88,7 +87,7 @@ onMouseClick(e) {
 
     // draw the image
     // since the context is rotated, the image will be rotated also
-    ctx.drawImage(this.imageObj,-50,0);
+    ctx.drawImage(this.imageObj,-20,0,40,80);
 
     // we’re done with the rotating so restore the unrotated context
     ctx.restore();
