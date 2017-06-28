@@ -1,9 +1,9 @@
 class CannonBall {
-    constructor(angle, speed) {
+    constructor(angle, speed, startX, startY) {
         this.angle = angle-90;
         this.speed = speed;
-        this.x = 0;
-        this.y = 0;
+        this.x = startX;
+        this.y = startY;
         this.velocity_x = this.speed * Math.cos((2 * Math.PI / 360) * this.angle);
         this.velocity_y = this.speed * Math.sin((2 * Math.PI / 360) * this.angle);
     }

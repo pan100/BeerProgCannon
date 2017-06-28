@@ -83,7 +83,7 @@ class Game extends Component {
 }
 onMouseClick(e) {
     if(this.cannonReady) {
-        this.cannonBalls.push(new CannonBall(this.angle, 300));
+        this.cannonBalls.push(new CannonBall(this.angle, 300, cannonX, cannonY));
         console.log("inserted ball");
         this.cannonReady = false;
         setTimeout(() => {
@@ -99,7 +99,7 @@ onMouseClick(e) {
         //draw the cannon balls
     this.cannonBalls.forEach((ball) => {
         ctx.save();
-        ctx.translate(ball.x+cannonX,ball.y+cannonY);
+        ctx.translate(ball.x,ball.y);
         // rotate the canvas to the specified degrees
         ctx.rotate((ball.angle+90)*Math.PI/180);
 
@@ -140,10 +140,10 @@ onMouseClick(e) {
          );
     }
     isOutOfViewPort(item) {
-          if(item.x+cannonX < 0 
-     || item.y+cannonY < 0
-     || item.x+cannonX > this.props.width 
-     || item.y+cannonY > this.props.height) {
+          if(item.x < 0 
+     || item.y < 0
+     || item.x > this.props.width 
+     || item.y > this.props.height) {
     return true;
   }
   else return false;
