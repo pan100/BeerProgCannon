@@ -1,20 +1,12 @@
 class Person {
-    constructor(gender, direction) {
+    constructor(gender, speed) {
         this.gender = gender;
-        this.direction = direction;
         this.x = 0;
-        if(direction=="LEFT") {
-            this.x = 800;
-        }
         this.y = 0;
+        this.speed = speed;
     }
     moveForward() {
-        if(this.direction == "RIGHT") {
-            this.x++;
-        }
-        else {
-            this.x--;
-        }
+        this.x = this.x +this.speed;
     }
 
 }

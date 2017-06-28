@@ -9,6 +9,7 @@ class Game extends Component {
 
     constructor() {
         super();
+        this.score=0;
         this.imageObj = new Image();
         this.imageObj.src = 'cannon.png';
         this.beerImageObj = new Image();
@@ -21,14 +22,22 @@ class Game extends Component {
         this.cannonBalls = [];
         this.cannonReady = true;
         this.persons = [];
-        this.personInterval = 100;
+        this.personInterval = Math.floor((Math.random()*500)+1);;
         this.counterSincePerson = 100;
         this.cannonBallStepper = setInterval(()=>{
             this.cannonBalls.forEach((ball, index, array)=> {
                 ball.moveForward();
                 if(this.isOutOfViewPort(ball)) {
                     array.splice(index,1);
+                    this.score--;
                 }
+                this.persons.forEach((person, index2,array2)=>{
+                    if(this.overlaps(ball,person)) {
+                        array2.splice(index2,1);
+                        array.splice(index,1);
+                        this.score++;
+                    }
+                });
             });
             this.persons.forEach((person, index, array)=> {
                 person.moveForward();
@@ -39,22 +48,17 @@ class Game extends Component {
             });
             if(this.counterSincePerson >= this.personInterval) {
                 var rand1 = Math.floor((Math.random()*2)+1);
-                var rand2 = Math.floor((Math.random()*2)+1);
-                var gender, direction;
+                var gender;
                 if(rand1 == 1) {
                     gender = "MALE";
                 }
                 if(rand1 == 2) {
                     gender = "FEMALE";
                 }
-                if(rand2 = 1) {
-                    direction = "LEFT";
-                }
-                if(rand2= 2) {
-                    direction = "RIGHT";
-                }
-                this.persons.push(new Person(gender, direction));
+                var speed = Math.floor((Math.random()*3)+1);
+                this.persons.push(new Person(gender, speed));
                 this.counterSincePerson = 0;
+                this.personInterval = Math.floor((Math.random()*500)+1);;
             }
             this.counterSincePerson++;
         },5);
@@ -91,11 +95,30 @@ onMouseClick(e) {
         },1000)
     }
 }
+
+overlaps(item1, item2) {
+
+    function comparePositions( p1, p2 ) {
+        var r1, r2;
+        r1 = p1[0] < p2[0] ? p1 : p2;
+        r2 = p1[0] < p2[0] ? p2 : p1;
+        return r1[1] > r2[0] || r1[0] === r2[0];
+    }
+        var pos1 = [ [item1.x, item1.x+30], [item1.y, item1.y+60] ],
+            pos2 = [ [item2.x, item2.x+30], [item2.y, item2.y+60] ]
+        return comparePositions( pos1[0], pos2[0] ) && comparePositions( pos1[1], pos2[1] );
+}
     updateCanvas() {
 
     
     const ctx = this.refs.canvas.getContext('2d');
     ctx.clearRect(0,0, this.props.width, this.props.height);
+
+    ctx.font = "30px Comic Sans MS";
+    ctx.fillStyle = "red";
+    ctx.textAlign = "center";
+    ctx.fillText(this.score, this.props.width-50, this.props.height-50); 
+
         //draw the cannon balls
     this.cannonBalls.forEach((ball) => {
         ctx.save();
