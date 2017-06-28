@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import CannonBall from './CannonBall.js'
+import CannonBall from './CannonBall.js';
+import Person from './Person.js';
 
-    const cannonX = 400-15;
-    const cannonY = 500-60;
+const cannonX = 400-15;
+const cannonY = 500-60;
 
 class Game extends Component {
 
@@ -12,9 +13,16 @@ class Game extends Component {
         this.imageObj.src = 'cannon.png';
         this.beerImageObj = new Image();
         this.beerImageObj.src = 'beer.png';
+        this.maleImageObj = new Image();
+        this.maleImageObj.src = 'male.jpg';
+        this.femaleImageObj = new Image(); 
+        this.femaleImageObj.src = 'female.jpg'
         this.angle=0;
         this.cannonBalls = [];
         this.cannonReady = true;
+        this.persons = [];
+        this.personInterval = 100;
+        this.counterSincePerson = 100;
         this.cannonBallStepper = setInterval(()=>{
             this.cannonBalls.forEach((ball, index, array)=> {
                 ball.moveForward();
@@ -22,6 +30,33 @@ class Game extends Component {
                     array.splice(index,1);
                 }
             });
+            this.persons.forEach((person, index, array)=> {
+                person.moveForward();
+                if(this.isOutOfViewPort(person)) {
+                    array.splice(index,1);
+                }
+
+            });
+            if(this.counterSincePerson >= this.personInterval) {
+                var rand1 = Math.floor((Math.random()*2)+1);
+                var rand2 = Math.floor((Math.random()*2)+1);
+                var gender, direction;
+                if(rand1 == 1) {
+                    gender = "MALE";
+                }
+                if(rand1 == 2) {
+                    gender = "FEMALE";
+                }
+                if(rand2 = 1) {
+                    direction = "LEFT";
+                }
+                if(rand2= 2) {
+                    direction = "RIGHT";
+                }
+                this.persons.push(new Person(gender, direction));
+                this.counterSincePerson = 0;
+            }
+            this.counterSincePerson++;
         },5);
     }
     componentDidMount() {
@@ -29,10 +64,8 @@ class Game extends Component {
         setInterval(() => {
             this.updateCanvas();
         }, 1000/FPS);
-        this.updateCanvas();
     }
     componentDidUpdate() {
-        this.updateCanvas();
     }
     onMouseMove(e) {
     //calculate the angle
@@ -77,6 +110,14 @@ onMouseClick(e) {
         // we’re done with the rotating so restore the unrotated context
         ctx.restore();
     });
+    this.persons.forEach((person) => {
+        if(person.gender == "MALE") {
+            ctx.drawImage(this.maleImageObj,person.x,person.y,30,60);
+        }
+        else {
+            ctx.drawImage(this.femaleImageObj,person.x,person.y,30,60);
+        }
+    });
 
             // save the unrotated context of the canvas so we can restore it later
     // the alternative is to untranslate & unrotate after drawing
@@ -103,7 +144,6 @@ onMouseClick(e) {
      || item.y+cannonY < 0
      || item.x+cannonX > this.props.width 
      || item.y+cannonY > this.props.height) {
-         console.log("removing at " + item.x + " " + item.y);
     return true;
   }
   else return false;
